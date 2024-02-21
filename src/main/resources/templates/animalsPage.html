@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список видов животных</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="container">
+    <div style="padding: 5px; display: flex; align-items: center">
+        <input type="text" class="input-field" id="inputField" placeholder="Введите что-то...">
+        <button type="submit" class="submit-button" onclick="submitForm()">OK</button>
+    </div>
+    <div th:if="${animals}">
+        <ul>
+            <li th:each="animal : ${animals}">
+                <p>
+                    <span th:text="${animal.getAnimalSpecies()}"></span>
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script src="javaScript/scripts.js"></script>
+
+</body>
+</html>

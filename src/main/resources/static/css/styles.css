@@ -1,0 +1,32 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.container {
+    width: calc(25%); /* Ширина в 1/4 экрана с учетом отступов */
+    height: calc(60%); /* Высота в 6/10 экрана с учетом отступов */
+    margin: 10vh 0 0 auto; /* Отступы сверху (10% высоты экрана), справа - автоматический отступ */
+    border: 10px solid darkgreen; /* Темно-зеленая рамка */
+}
+
+.input-field {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background-color: #c8e6c9; /* Нежно-зеленый цвет для поля ввода */
+}
+
+.submit-button {
+    padding: 10px;
+    border: none;
+    background-color: #a5d6a7; /* Нежно-томный зеленый цвет для кнопки */
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.submit-button:hover {
+    background-color: #81c784; /* Изменение цвета кнопки при наведении */
+}
