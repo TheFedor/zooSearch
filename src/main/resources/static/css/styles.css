@@ -4,11 +4,14 @@ body, html {
     height: 100%;
 }
 
-.container {
+.containerR {
+    border: 5px solid; /* Внешняя темно-зеленая рамка */
     width: calc(25%); /* Ширина в 1/4 экрана с учетом отступов */
     height: calc(60%); /* Высота в 6/10 экрана с учетом отступов */
+    background-color: #f0fff0;
     margin: 10vh 0 0 auto; /* Отступы сверху (10% высоты экрана), справа - автоматический отступ */
-    border: 10px solid darkgreen; /* Темно-зеленая рамка */
+    border-image: linear-gradient(to bottom right, #00C322,#00C322,#00C322,#00C322,black,#65E17B,#65E17B,#65E17B,#65E17B); /* Градиент для рамки, ширина рамки - 10px */
+    border-image-slice: 10; /* Размер рамки */
 }
 
 .input-field {

@@ -41,6 +41,9 @@ public class AnimalsEntity {
     @Column(name="fullinfo")
     private String fullInfo;
 
+    @Column(name="photolink")
+    private String photoLink;
+
     @Override
     public String toString() {
         return "AnimalsEntity{" +
