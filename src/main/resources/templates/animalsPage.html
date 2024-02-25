@@ -7,22 +7,63 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<style>
+    .animal-select {
+        border: none;
+        font-family: TimesNewRoman, sans-serif;
+        font-size: 12px;
+        background-color: #f0fff0;
+        scrollbar-color: darkgreen lightgreen; /* для Firefox */
+        scrollbar-width: thin; /* для Firefox */
+        width: calc(100%);
+        height: calc(100%);
+    }
+
+    .animal-select::-webkit-scrollbar {
+        width: 12px; /* для Chrome, Safari и Opera */
+    }
+
+    .animal-select::-webkit-scrollbar-thumb {
+        background-color: darkgreen; /* для Chrome, Safari и Opera */
+    }
+</style>
 
 <div class="containerR">
     <div style="padding: 5px; display: flex; align-items: center">
-        <input type="text" class="input-field" id="inputField" placeholder="Введите что-то...">
-        <button type="submit" class="submit-button" onclick="submitForm()">OK</button>
+        <input type="text" class="input-field" id="inputField" oninput="filterAnimals()" placeholder="Введите что-то...">
     </div>
-    <div th:if="${animals}">
-        <ul>
-            <li th:each="animal : ${animals}">
-                <p>
-                    <span th:text="${animal.getAnimalSpecies()}"></span>
-                </p>
-            </li>
-        </ul>
+    <div>
+        <select id="animalSelect" class="animal-select" size="18" onchange="handleSelection()">
+            <option th:each="animal : ${animals}" th:value="${animal.getAnimalSpecies()}" th:text="${animal.getAnimalSpecies()}"></option>
+        </select>
     </div>
 </div>
+
+<script>
+    function filterAnimals() {
+        var input, filter, select, options, option, i, txtValue;
+        input = document.getElementById('inputField');
+        filter = input.value.toUpperCase();
+        select = document.getElementById('animalSelect');
+        options = select.getElementsByTagName('option');
+
+        for (i = 0; i < options.length; i++) {
+            option = options[i];
+            txtValue = option.textContent || option.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                option.style.display = "";
+            } else {
+                option.style.display = "none";
+            }
+        }
+    }
+
+    function handleSelection() {
+        var select = document.getElementById('animalSelect');
+        var selectedValue = select.options[select.selectedIndex].value;
+        console.log("Выбранное животное: " + selectedValue);
+    }
+</script>
 
 <script src="javaScript/scripts.js"></script>
 
