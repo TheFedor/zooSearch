@@ -33,10 +33,16 @@
         <input type="text" class="input-field" id="inputField" oninput="filterAnimals()" placeholder="Введите что-то...">
     </div>
     <div>
-        <select id="animalSelect" class="animal-select" size="18" onchange="handleSelection()">
-            <option th:each="animal : ${animals}" th:value="${animal.getAnimalSpecies()}" th:text="${animal.getAnimalSpecies()}"></option>
+        <select id="animalSelect" class="animal-select" size="18" onchange="handleSelection()" onmouseover="showPhoto()">
+            <option th:each="animal : ${animals}" th:value="${animal.getAnimalSpecies()}" th:text="${animal.getAnimalSpecies()}"th:data-photo="${animal.getPhotoLink()}"></option>
         </select>
     </div>
+</div>
+
+<div id="selectedAnimal"></div> <!--Для вывода текстом выбранного животного-->
+
+<div class="containerPhoto">
+    <img id="animalPhoto" src="" alt="">
 </div>
 
 <script>
@@ -60,8 +66,27 @@
 
     function handleSelection() {
         var select = document.getElementById('animalSelect');
-        var selectedValue = select.options[select.selectedIndex].value;
-        console.log("Выбранное животное: " + selectedValue);
+        var selectedOption = select.options[select.selectedIndex];
+        var photoLink = selectedOption.getAttribute('data-photo');
+        displayPhoto(photoLink);
+    }
+
+
+    function showPhoto() {
+        var select = document.getElementById('animalSelect');
+        var selectedOption = select.options[select.selectedIndex];
+        var photoLink = selectedOption.getAttribute('data-photo');
+        displayPhoto(photoLink);
+    }
+
+    function displayPhoto(photoLink) {
+        var animalPhoto = document.getElementById('animalPhoto');
+        if (photoLink) {
+            animalPhoto.src = photoLink;
+            animalPhoto.classList.add('visible');
+        } else {
+            animalPhoto.classList.remove('visible');
+        }
     }
 </script>
 
