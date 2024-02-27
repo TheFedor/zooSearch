@@ -1,5 +1,6 @@
+//Пакет (папка) где находится файл
 package com.example.zoomapsearchadntest.entities;
-
+//импорт классов и аннотаций из библиотек (Jakarta Persistence API и Lombok)
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,14 +8,14 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Table(name = "animals")
-@Getter
-@Setter
+@Entity //Аннотация, обозначающая что класс ниже является сущностью в БД. Сопоставляет Java-класс с таблицей БД
+@Table(name = "animals") //Аннотация, указывает что сущность AnimalsEntity будет отображаться на таблицу с именем "animals" в БД
+@Getter //Аннотация Lombok, автоматически создает геттеры для всех полей класса
+@Setter //Аннотация Lombok, автоматически создает сеттеры для всех полей класса
 public class AnimalsEntity {
 
-    @Id
-    @Column(name="id")
+    @Id //Аннотация, указывает что поле ниже является первичным ключом для сущности AnimalsEntity
+    @Column(name="id") //Аннотация, которая сопоставляет поле ниже столбцу "id" из таблицы БД
     private Integer id;
 
     @Column(name="animalphylum")
@@ -44,7 +45,7 @@ public class AnimalsEntity {
     @Column(name="photolink")
     private String photoLink;
 
-    @Override
+    @Override //Аннотация, указывает что метод ниже переопределен (т.е. уже был определен, но мы переписываем его как нам нужно)
     public String toString() {
         return "AnimalsEntity{" +
                 "id=" + id +
