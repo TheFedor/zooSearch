@@ -4,25 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Список видов животных</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/searchStyles.css">
 </head>
 <body>
 
 <div class="searchContainer">
-    <div style="padding: 5px; display: flex; align-items: center">
-        <input type="text" class="input-field" id="inputField" oninput="filterAnimals()" placeholder="Введите что-то...">
+    <div class="inputFieldContainer">
+        <input type="text" class="inputField" id="inputField" oninput="filterAnimals()" placeholder="Введите что-то...">
     </div>
     <div>
-        <select id="animalSelect" class="animal-select" size="18" onchange="handleSelection()" onmouseover="showPhoto()">
+        <select id="animalSelect" class="animalSelect" size="18" onchange="handleSelection()" onmouseover="showPhoto()">
             <option th:each="animal : ${animals}" th:value="${animal.getAnimalSpecies()}" th:text="${animal.getAnimalSpecies()}"th:data-photo="${animal.getPhotoLink()}"></option>
         </select>
     </div>
-</div>
-
-<div id="selectedAnimal"></div> <!--Для вывода текстом выбранного животного-->
-
-<div class="containerPhoto">
-    <img id="animalPhoto" src="" alt="">
 </div>
 
 <script src="javaScript/scripts.js"></script>
