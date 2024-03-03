@@ -9,7 +9,7 @@ import com.example.zoomapsearchadntest.repositoryes.animalsRepository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.awt.*;
+
 import java.util.List;
 
 
@@ -26,6 +26,6 @@ public class animalsController {
             System.out.println(animals.get(i));
         }
         model.addAttribute("animals", animals); //Сохраняет данные animals в модель под именем "animals". Другими словами, добавляет атрибут с именем "animals" и значением animals в объект Model
-        return "animalsPage"; //Возвращает имя представления, которое должно быть отображено. Тут "animalsPage" указывает на имя файла представления (http-файла), который должен быть отображен пользователю в результате работы этого метода, в ответ на запрос
+        return "animalsPage_old"; //Возвращает имя представления, которое должно быть отображено. Тут "animalsPage" указывает на имя файла представления (http-файла), который должен быть отображен пользователю в результате работы этого метода, в ответ на запрос
     }
 }
