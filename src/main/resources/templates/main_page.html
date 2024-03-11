@@ -12,7 +12,11 @@
     <input type="text" id="searchInputField" placeholder="Введите..."> <!--Тег создает текстовое (type="text") поле ввода с id="searchInputField" (считай что программное имя для этого объекта). placeholder - текст, отображающийся в поле до того, как пользователь что-то ввел-->
     <button id="searchSubmitButton">Ввод</button> <!--Тег создает кнопку с id="searchSubmitButton" и текстом на кнопке "Ввод"-->
   </div> <!--Закрывающий тег верхнего внутреннего контейнера-->
-  <div class="inner-container middle-inner-container"></div> <!--Тег создает внутренний контейнер с классами inner-container и middle-inner-container из css файла-->
+  <div class="inner-container middle-inner-container">
+    <select id="animalSelect" class="animalSelect" size="18" onchange="handleSelection()" onmouseover="showPhoto()">
+      <option th:each="animal : ${animals}" th:value="${animal.getAnimalSpecies()}" th:text="${animal.getAnimalSpecies()}"th:data-photo="${animal.getPhotoLink()}"></option>
+    </select>
+  </div> <!--Тег создает внутренний контейнер с классами inner-container и middle-inner-container из css файла-->
   <div class="inner-container bottom-inner-container"></div> <!--Тег создает внутренний контейнер с классами inner-container и bottom-inner-container из css файла-->
 </div> <!--Закрывающий тег внешнего контейнера с классом "external-search-container"-->
 <script src="javaScript/search_block_scripts.js"></script> <!--Тег, подключающий внешний JavaScript файл по адресу src (В JS файлах прописана динамика страницы)-->
