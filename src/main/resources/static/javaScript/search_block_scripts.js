@@ -18,6 +18,8 @@ searchSubmitButton.addEventListener('click', function() { //устанавлив
 });
 
 // Обработчик события для изменения размера поля ввода
+/*
 searchInputField.addEventListener('input', function() { //Устанавливаем функцию (слушатель) на событие ввода данных в поле объекта searchInputField
     this.style.width = (this.value.length * 8) + 'px'; //Устанавливаем ширину поля равной ширине его содержимого, умноженного на 8
 });
+ */
