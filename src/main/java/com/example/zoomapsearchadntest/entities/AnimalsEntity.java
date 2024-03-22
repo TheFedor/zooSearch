@@ -8,6 +8,9 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.*;
+import java.util.ArrayList;
+
 @Entity //Аннотация, обозначающая что класс ниже является сущностью в БД. Сопоставляет Java-класс с таблицей БД
 @Table(name = "animals") //Аннотация, указывает что сущность AnimalsEntity будет отображаться на таблицу с именем "animals" в БД
 @Getter //Аннотация Lombok, автоматически создает геттеры для всех полей класса
@@ -44,6 +47,10 @@ public class AnimalsEntity {
 
     @Column(name="photolink")
     private String photoLink;
+
+    public String getAnimalBaseInformation() {
+        return animalPhylum + " " + animalClass;
+    }
 
     @Override //Аннотация, указывает что метод ниже переопределен (т.е. уже был определен, но мы переписываем его как нам нужно)
     public String toString() {

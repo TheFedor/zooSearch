@@ -13,8 +13,15 @@
     <button id="searchSubmitButton">Ввод</button> <!--Тег создает кнопку с id="searchSubmitButton" и текстом на кнопке "Ввод"-->
   </div> <!--Закрывающий тег верхнего внутреннего контейнера-->
   <div class="inner-container middle-inner-container">
-    <select id="animalSelect" class="animalSelect" size="18" onchange="handleSelection()" onmouseover="showPhoto()">
-      <option th:each="animal : ${animals}" th:value="${animal.getAnimalSpecies()}" th:text="${animal.getAnimalSpecies()}"th:data-photo="${animal.getPhotoLink()}"></option>
+    <select id="animalSelect" class="animal-select" size="10" onchange="handleSelection()" onmouseover="showPhoto()">
+      <option th:each="animal : ${animals}" th:value="${animal.getAnimalSpecies()}" th:text="${animal.getAnimalSpecies()}" th:data-animal-base-information="${animal.getAnimalBaseInformation()}" th:data-photo="${animal.getPhotoLink()}" id="search-option"></option>
+      <!--<option th:each="animal : ${animals}" th:value="${animal.getAnimalBaseInformation()}" th:text="${animal.getAnimalBaseInformation()}"th:data-photo="${animal.getPhotoLink()}"></option>-->
+      <!--<th:block th:each="animal: ${animals}">
+        <option>
+          <span th:text="${animal.getAnimalBaseInformation()}"></span>
+          <span th:text="${animal.getAnimalSpecies()}"></span>
+        </option>
+      </th:block>-->
     </select>
   </div> <!--Тег создает внутренний контейнер с классами inner-container и middle-inner-container из css файла-->
   <div class="inner-container bottom-inner-container"></div> <!--Тег создает внутренний контейнер с классами inner-container и bottom-inner-container из css файла-->
