@@ -49,7 +49,7 @@ public class AnimalsEntity {
     private String photoLink;
 
     public String getAnimalBaseInformation() {
-        return animalPhylum + "▶" + animalClass + "▶" + animalOrder + "▶" + animalFamily + "▶" + animalGenus;
+        return animalOrder + "▶" + animalFamily + "▶" + animalGenus;
     }
 
     @Override //Аннотация, указывает что метод ниже переопределен (т.е. уже был определен, но мы переписываем его как нам нужно)

@@ -1,6 +1,11 @@
 // Получаем ссылки на элементы DOM
 const searchInputField = document.getElementById('searchInputField'); //Сохраняем ссылку на элемент страницы (поле ввода в блоке поиска) по id
 const searchSubmitButton = document.getElementById('searchSubmitButton'); //Сохраняем ссылку на элемент (кнопка ввода в блоке поиска) по id
+const testId = document.getElementById('testId');
+
+
+
+
 
 // Обработчик события для кнопки "Ввести"
 searchSubmitButton.addEventListener('click', function() { //устанавливаем функцию (слушатель) на событие клика по объекту searchSubmitButton
