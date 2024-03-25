@@ -25,7 +25,7 @@
     <button id="searchSubmitButton">Ввод</button> <!--Тег создает кнопку с id="searchSubmitButton" и текстом на кнопке "Ввод"-->
   </div> <!--Закрывающий тег верхнего внутреннего контейнера-->
   <div class="inner-container middle-inner-container">
-    <select id="animal-select" class="animal-select" size="10" onchange="handleSelection()" onmouseover="showPhoto()">
+    <select id="animal-select" class="animal-select" size="10" onchange="handleSelection()" onmouseover="selectAnimalPhotoAndData()">
       <option th:each="animal : ${animals}" th:value="${animal.getAnimalSpecies()}" th:text="${animal.getAnimalSpecies()}" th:data-animal-base-information="${animal.getAnimalBaseInformation()}" th:data-photo="${animal.getPhotoLink()}" id="search-option"></option>
       <!--<option th:each="animal : ${animals}" th:value="${animal.getAnimalBaseInformation()}" th:text="${animal.getAnimalBaseInformation()}"th:data-photo="${animal.getPhotoLink()}"></option>-->
       <!--<th:block th:each="animal: ${animals}">
@@ -36,10 +36,13 @@
       </th:block>-->
     </select>
   </div> <!--Тег создает внутренний контейнер с классами inner-container и middle-inner-container из css файла-->
-  <div class="inner-container bottom-inner-container"></div> <!--Тег создает внутренний контейнер с классами inner-container и bottom-inner-container из css файла-->
+  <div class="inner-container bottom-inner-container">
+    <div class="left-part-bottom-inner-container" id="animals-image-block"></div>
+    <div class="right-part-bottom-inner-container"></div>
+  </div> <!--Тег создает внутренний контейнер с классами inner-container и bottom-inner-container из css файла-->
 </div> <!--Закрывающий тег внешнего контейнера с классом "external-search-container"-->
 
-<div style="border: 5px solid black; height: 2000px; width: 2000px; background-image: url('/baseBackground/moskovskij_zoopark.png')"></div> - тестовый контейнер для картинок
+<div id="map-container"></div> - тестовый контейнер для картинок
 
 <script src="javaScript/all_scripts_file.js"></script> <!--Тег, подключающий внешний JavaScript файл по адресу src (В JS файлах прописана динамика страницы)-->
 </body><!--Тег, закрывающий секцию тела документа-->

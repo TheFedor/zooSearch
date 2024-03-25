@@ -3,8 +3,8 @@
     top: 10%; /* Отступ от верха - 10%*/
     right: 0; /*Отступ от низа - 0*/
     /*bottom: 0; Отступ справа - 0*/
-    width: 25%; /*Ширина контейнера - 25% ширины рабочей зоны*/
-    height: 750px;
+    width: 35%; /*Ширина контейнера - 25% ширины рабочей зоны*/
+    height: 748px;
     background-color: #f0fff0; /* нежно-зеленый цвет заднего фона*/
     border-top: 10px solid #65E17B; /* темно-зеленая обводка сверху */
     border-left: 10px solid #65E17B; /* темно-зеленая обводка слева */
@@ -32,7 +32,30 @@
 }
 
 .bottom-inner-container { /*Нижний внутренний контейнер*/
-    height: 151px; /*Высота - 30% внешнего контейнера*/
+    height: 249px; /*Высота - 30% внешнего контейнера*/
+    display: flex;
+    justify-content: flex-start; /* Выравниваем элементы по левому краю */
+}
+
+.left-part-bottom-inner-container, .right-part-bottom-inner-container { /*поля для картинки в блоке поиска и описания картинки*/
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.left-part-bottom-inner-container {
+    width: 249px;
+    background-size: contain; /*Растягивает или сжимает изображение по высоте и ширине блока*/
+    background-repeat: no-repeat; /*Предотвращает повторение изображения внутри блока*/
+    background-position: center;
+    background-image: url('../baseBackground/moskovskij_zoopark.png');
+    background-color: red;
+}
+
+.right-part-bottom-inner-container {
+    flex: 1;
+    background-color: blue;
 }
 
 #searchInputField, #searchSubmitButton {
@@ -84,6 +107,7 @@
     /*top: calc(10%); отступ сверху*/
     width: calc(100%); /*ширина элемента - макс*/
     height: calc(100%); /*мысота элемента - макс*/
+    background-color: gray;
 }
 
 .animal-select::-webkit-scrollbar { /*Стилизация полосы прокрутки внутри элемента animal-select*/

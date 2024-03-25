@@ -36,6 +36,23 @@ function filterAnimals() { //функция для поиска животных
     }
 }
 
+function selectAnimalPhotoAndData() { //функция для отображения картинки и информации о животном
+    var selectBlock = document.getElementById('animal-select');
+    var selectedOption = selectBlock.options[selectBlock.selectedIndex];
+    var photoLink = selectedOption.getAttribute('data-photo');
+    displayAnimalPhoto(photoLink);
+}
+
+function displayAnimalPhoto(photoLink) { //функция для отображения соответствующей фотографии животного
+    var imageBlock = document.getElementById('animals-image-block');
+    if (photoLink) {
+        imageBlock.style.backgroundSize = 'contain';
+        imageBlock.style.backgroundImage = 'url(' + photoLink + ')';
+    } else {
+        animalPhoto.style.backgroundImage = 'url(' + 'baseBackground/moskovskij_zoopark.png' + ')';
+    }
+}
+
 
 
 // Обработчик события для кнопки "Ввести"

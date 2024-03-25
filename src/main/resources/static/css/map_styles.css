@@ -1,12 +1,13 @@
 #map-container {
-    width: 100%; /* Ширина зоны отображения карты */
-    height: 100%; /* Высота зоны отображения карты */
-    background-image: url('static/baseBackground/moskovskij_zoopark.png');
+    width: 2000px; /* Ширина зоны отображения карты */
+    height: 2000px; /* Высота зоны отображения карты */
+    background-image: url('../baseBackground/moskovskij_zoopark.png');
     background-size: cover; /* Растягивает изображение на всю область */
     background-position: center; /* Позиционирует изображение по центру */
     position: absolute;
-    top: 50%; /* Перемещаем карту на середину вертикально */
-    left: 50%; /* Перемещаем карту на середину горизонтально */
+    /*top: 50%; Перемещаем карту на середину вертикально */
+    /*left: 50%; /* Перемещаем карту на середину горизонтально */
     transform: translate(-50%, -50%); /* Центрируем карту относительно ее собственных размеров */
     z-index: -1; /* Помещаем карту за остальным контентом */
+    border: 5px solid black;
 }
