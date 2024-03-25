@@ -41,6 +41,8 @@ function selectAnimalPhotoAndData() { //функция для отображен
     var selectedOption = selectBlock.options[selectBlock.selectedIndex];
     var photoLink = selectedOption.getAttribute('data-photo');
     displayAnimalPhoto(photoLink);
+    var briefInfo = selectedOption.getAttribute('animals-brief-description');
+    displayAnimalBriefInfo(briefInfo);
 }
 
 function displayAnimalPhoto(photoLink) { //функция для отображения соответствующей фотографии животного
@@ -51,6 +53,10 @@ function displayAnimalPhoto(photoLink) { //функция для отображ�
     } else {
         animalPhoto.style.backgroundImage = 'url(' + 'baseBackground/moskovskij_zoopark.png' + ')';
     }
+}
+
+function displayAnimalBriefInfo(briefInfo) {
+    document.getElementById('animals-information-block').innerHTML = briefInfo + '<br>Подробнее...';
 }
 
 
