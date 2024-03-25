@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--Мета-тег задает параметры отображения страницы. Viewport - это видимая пользователю область страницы сайта без прокруток. 'width=device-width' - ширина на всю рабочую область устройства. 'initial-scale=1.0' - указывает браузеру соотношение пикселей CSS и устройства независимо от ориентации дисплея, в соотношении 1 к 1 ([0.1 - 10] 1.0 означает не масштабировать)-->
   <title>MoscowZooMapSite</title> <!--Заголовок документа, который отображается во вкладке браузера-->
   <link rel="stylesheet" href="css/search_block_styles.css"> <!--Тег для подключения внешнего CSS файла (rel="stylesheet". relationship - сообщает как указанный элемент связан с содержащим его документом). href= - подключаем стили по адресу (стили блока поиска)-->
+  <link rel="stylesheet" href="css/map_styles.css"> <!--Тег для подключения внешнего CSS файла (rel="stylesheet". relationship - сообщает как указанный элемент связан с содержащим его документом). href= - подключаем стили по адресу (стили карты)-->
 </head> <!--Тег, закрывающий заголовок-->
 <body> <!--Тек, открывающий тело документа, где располагается основное содержание страницы-->
 <div class="external-search-container"> <!--Тег создает контейнер с классом "external-serach-container" из css файла-->
   <div class="inner-container top-inner-container"> <!--Тег создает внутренний контейнер с классами inner-container и top-inner-container из css файла-->
-    <input type="text" id="searchInputField" placeholder="Введите..."> <!--Тег создает текстовое (type="text") поле ввода с id="searchInputField" (считай что программное имя для этого объекта). placeholder - текст, отображающийся в поле до того, как пользователь что-то ввел-->
+    <input type="text" id="searchInputField" placeholder="Введите..." oninput="filterAnimals()"> <!--Тег создает текстовое (type="text") поле ввода с id="searchInputField" (считай что программное имя для этого объекта). placeholder - текст, отображающийся в поле до того, как пользователь что-то ввел-->
     <button id="searchSubmitButton">Ввод</button> <!--Тег создает кнопку с id="searchSubmitButton" и текстом на кнопке "Ввод"-->
   </div> <!--Закрывающий тег верхнего внутреннего контейнера-->
   <div class="inner-container middle-inner-container">
@@ -27,7 +28,8 @@
   <div class="inner-container bottom-inner-container"></div> <!--Тег создает внутренний контейнер с классами inner-container и bottom-inner-container из css файла-->
 </div> <!--Закрывающий тег внешнего контейнера с классом "external-search-container"-->
 
-<div style="border: 5px solid black; height: 150px; width: 150px" if="testId"></div> - тестовый контейнер для картинок
-<script src="javaScript/search_block_scripts.js"></script> <!--Тег, подключающий внешний JavaScript файл по адресу src (В JS файлах прописана динамика страницы)-->
+<div style="border: 5px solid black; height: 2000px; width: 2000px; background-image: url('/baseBackground/moskovskij_zoopark.png')"></div> - тестовый контейнер для картинок
+
+<script src="javaScript/all_scripts_file.js"></script> <!--Тег, подключающий внешний JavaScript файл по адресу src (В JS файлах прописана динамика страницы)-->
 </body><!--Тег, закрывающий секцию тела документа-->
 </html> <!--Тег, закрывающий html-документ-->
