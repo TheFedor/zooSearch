@@ -2,6 +2,87 @@
 const searchInputField = document.getElementById('searchInputField'); //Сохраняем ссылку на элемент страницы (поле ввода в блоке поиска) по id
 const searchSubmitButton = document.getElementById('searchSubmitButton'); //Сохраняем ссылку на элемент (кнопка ввода в блоке поиска) по id
 
+// переменная - матрица цветов карты
+var colorMatrix = [];
+var roadMatrix = [];
+
+//Функция - заполнение матрицы
+function findMapColorMatrix() {
+    //получаем элемент map-container
+    var mapContainer = document.getElementById('map-container');
+    //получаем стиль backgroundImage этого класса
+    var backgroundImageStyle = getComputedStyle(mapContainer).getPropertyValue('background-image');
+    //извлекаем url из значения background-image
+    var imageURL = backgroundImageStyle.replace('url("', '').replace('")', '');
+    //создаем новый объект Image
+    var image = new Image();
+    //устанавливаем src изображения
+    image.src = imageURL;
+    console.log('ждем загрузки изображения');
+    image.onload = function () {
+        image.style.width = getComputedStyle(mapContainer).getPropertyValue('width');
+        console.log('ширина задана: ' + image.style.width);
+        image.style.height = getComputedStyle(mapContainer).getPropertyValue('height');
+        console.log('высота задана: ' + image.style.height);
+
+        //Заполняем матрицу по этому изображению
+
+        //Небольшая пауза
+        console.log('Небольшая пауза в 5 секунд');
+        setTimeout(function() {
+            console.log('Прошло 5 секунд');
+            console.log('начинается обработка карты')
+            // Создаем элемент canvas для работы с изображением
+            var canvas = document.createElement('canvas');
+            canvas.width = image.width;
+            canvas.height = image.height;
+            console.log('canvas создан')
+            console.log('высота и ширина канвас: ' + canvas.height + ' ' + canvas.width);
+
+            // Получаем контекст рисования на canvas
+            var ctx = canvas.getContext('2d');
+            console.log('контекст рисования не canvas')
+
+            // Рисуем изображение на canvas
+            ctx.drawImage(image, 0, 0);
+            console.log('изображение на canvas нарисовано')
+
+            // Получаем данные пикселей изображения
+            var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            var data = imageData.data;
+
+            // Проходимся по каждому пикселю
+            //попутно заполняем матрицу дорог (1 - дорога, 0 - не дорога
+            console.log('111')
+            for (var i = 0; i < data.length; i += 4) {
+                // Получаем цвет пикселя (RGBA)
+                var red = data[i];
+                var green = data[i + 1];
+                var blue = data[i + 2];
+                var alpha = data[i + 3];
+
+                // Сохраняем цвет пикселя в массив colorMatrix
+                colorMatrix.push([red, green, blue, alpha]);
+                if (i % 4000 === 0) {
+                    console.log('i: ' + (i/4));
+                }
+                if (red === 0 && green === 150 && blue === 64 && alpha === 255) {
+                    roadMatrix.push(1);
+                } else {
+                    roadMatrix.push(0);
+                }
+            }
+            console.log('матрица дорог: ')
+            console.log(roadMatrix);
+
+        }, 5000); // 5000 миллисекунд = 5 секунд
+    }
+
+}
+
+//вызываем функцию сразу
+findMapColorMatrix();
+
 function filterAnimals() { //функция для поиска животных по списку
     var inputField, filter, selectBlock, options, option, i, j, txtValue, evenAndOddCounter; //объявляем переменные
     inputField = document.getElementById('searchInputField'); //получение элемента из DOM по id
@@ -43,6 +124,19 @@ function selectAnimalPhotoAndData() { //функция для отображен
     displayAnimalPhoto(photoLink);
     var briefInfo = selectedOption.getAttribute('animals-brief-description');
     displayAnimalBriefInfo(briefInfo);
+
+    /*
+    for (let y = 0; y < colorMatrix.length; y++) {
+        let rowString = ""; // Создаем строку для текущей строки матрицы
+        for (let x = 0; x < colorMatrix[y].length; x++) {
+            // Получаем цвет текущего пикселя
+            const color = colorMatrix[y][x];
+            // Формируем строку с цветами текущей строки матрицы
+            rowString += "[" + color.join(", ") + "] ";
+        }
+        // Выводим строку в консоль
+        console.log(rowString);
+    }*/
 }
 
 function displayAnimalPhoto(photoLink) { //функция для отображения соответствующей фотографии животного
@@ -58,6 +152,8 @@ function displayAnimalPhoto(photoLink) { //функция для отображ�
 function displayAnimalBriefInfo(briefInfo) {
     document.getElementById('animals-information-block').innerHTML = briefInfo + '<br>Подробнее...';
 }
+
+
 
 
 
