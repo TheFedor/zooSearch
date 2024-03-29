@@ -1,0 +1,9 @@
+#top-panel {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 10%;
+    background-color: #f0fff0;
+    border-bottom: 10px solid #65E17B;
+    z-index: 9999; /*позиционируем этот блок поверх всех возможных остальных*/
+}

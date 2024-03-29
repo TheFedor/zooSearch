@@ -26,9 +26,9 @@ var ctx = canvas.getContext('2d');
 function findRoad() {
     console.log('кликнули')
     var animalData = [
-        { name: 'Азиатский слон.png', x: 50, y: 320 },
-        { name: 'Африканский страус.png', x: 850, y: 450 },
-        { name: 'Капская земляная белка.png', x: 100, y: 850 }
+        { name: 'Азиатский слон.png', x: 50+40, y: 320+40 },
+        { name: 'Африканский страус.png', x: 850+40, y: 450+40 },
+        { name: 'Капская земляная белка.png', x: 100+40, y: 850+40 }
     ];
 
     var firstAnimal;
@@ -81,10 +81,26 @@ function findRoad() {
         for (var j = 0; j < path[i].length; ++j) {
             //если текущий элемент матрицы пути равен 2, то рисуем путь
             if (path[i][j] === 2) {
-                ctx.fillStyle = '#00008B'; //цвет пути
-                //рисуем пиксели в квадрате 20 от текущего
+                //рисуем черную обводку пути
+                ctx.fillStyle = 'black';
                 for (var x = j - 7; x <= j + 7; ++x) {
                     for (var y = i - 7; y <= i + 7; ++y) {
+                        if (x >= 0 && x < canvas.height && y >= 0 && y < canvas.width) {
+                            ctx.fillRect(x, y, 1, 1); // рисуем пиксель
+                        }
+                    }
+                }
+            }
+        }
+    }
+    for (var i = 0; i < path.length; ++i) {
+        for (var j = 0; j < path[i].length; ++j) {
+            //если текущий элемент матрицы пути равен 2, то рисуем путь
+            if (path[i][j] === 2) {
+                //рисуем внутреннюю часть пути
+                ctx.fillStyle = '#00008B'; //цвет пути
+                for (var x = j - 5; x <= j + 5; ++x) {
+                    for (var y = i - 5; y <= i + 5; ++y) {
                         if (x >= 0 && x < canvas.height && y >= 0 && y < canvas.width) {
                             ctx.fillRect(x, y, 1, 1); // рисуем пиксель
                         }
