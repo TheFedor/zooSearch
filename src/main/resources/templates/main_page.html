@@ -22,7 +22,7 @@
 <div class="external-search-container"> <!--Тег создает контейнер с классом "external-serach-container" из css файла-->
   <div class="inner-container top-inner-container"> <!--Тег создает внутренний контейнер с классами inner-container и top-inner-container из css файла-->
     <input type="text" id="searchInputField" placeholder="Введите..." oninput="filterAnimals()"> <!--Тег создает текстовое (type="text") поле ввода с id="searchInputField" (считай что программное имя для этого объекта). placeholder - текст, отображающийся в поле до того, как пользователь что-то ввел-->
-    <button id="searchSubmitButton">Ввод</button> <!--Тег создает кнопку с id="searchSubmitButton" и текстом на кнопке "Ввод"-->
+    <button id="searchSubmitButton" onclick="findRoad()">Ввод</button> <!--Тег создает кнопку с id="searchSubmitButton" и текстом на кнопке "Ввод"-->
   </div> <!--Закрывающий тег верхнего внутреннего контейнера-->
   <div class="inner-container middle-inner-container">
     <select id="animal-select" class="animal-select" size="10" onchange="handleSelection()" onmouseover="selectAnimalPhotoAndData()">
