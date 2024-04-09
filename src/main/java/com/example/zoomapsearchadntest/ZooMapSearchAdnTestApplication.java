@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ZooMapSearchAdnTestApplication { //Основной класс (entry point) приложения
 
     public static void main(String[] args) { //точка входа в приложение
-
         SpringApplication.run(ZooMapSearchAdnTestApplication.class, args); //Метод run класса SpringApplication запускает Spring Boot приложение, загружая все компоненты и настраивая их в соответствии с аннотациями и конфигурацией. Параметр 'ZooMapSearchAdnApplication.class' указывает на основной класс приложения, а параметр 'args' передает аргументы командной строки приложению, если они есть
     }
 

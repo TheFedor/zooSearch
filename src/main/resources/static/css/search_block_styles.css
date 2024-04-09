@@ -55,9 +55,10 @@
 
 .right-part-bottom-inner-container {
     flex: 1;
+    margin: 5px;
 }
 
-#animals-information-block {
+#brief-information-block {
     font-size: 14px; /* размер шрифта */
     font-family: Times New Roman, sans-serif; /* шрифт */
     line-height: 1.5; /* межстрочный интервал */
@@ -68,7 +69,7 @@
     background-color: yellow;
 }
 
-#searchInputField, #searchSubmitButton {
+#searchInputField, #listSelectionButton {
     height: 30px; /*высота объекта - 30px*/
     vertical-align: middle; /**/
     font-size: 12px; /*Размер внутреннего шрифта*/
@@ -91,7 +92,7 @@
     outline: none;
 }
 
-#searchSubmitButton { /*Стили для объекта с id='searchSubmitButton' (Кнопка справа от поля ввода блока поиска)*/
+#listSelectionButton { /*Стили для объекта с id='searchSubmitButton' (Кнопка справа от поля ввода блока поиска)*/
     /*padding: 5px 10px; Отступ между границей элемента и внутренним содержимым: 5px сверху и снизу, 10px слева и справа*/
     cursor: pointer; /*Устанавливает курсор в виде указателя (палец) при наведении на кнопку*/
     border-radius: 0 10px 10px 0; /*Скругление верхнего правого и нижнего правого углов кнопки*/
@@ -101,14 +102,14 @@
     border-left: 1px solid black;
 }
 
-#searchSubmitButton:hover { /*Стили для объекта с if='searchSubmitButton' (Кнопка справа от блока поиска) при наведении*/
+#listSelectionButton:hover { /*Стили для объекта с if='searchSubmitButton' (Кнопка справа от блока поиска) при наведении*/
     color: black; /*Меняем цвет текста при наведении*/
-    background-color: red; /*Меняем цвет кнопки при наведении*/
+    background-color: #0CDF0C; /*Меняем цвет кнопки при наведении*/
     border: 1px solid;
     vertical-align: center;
 }
 
-.animal-select { /*Стили для списка животных*/
+.animal-or-structure-select { /*Стили для списка животных*/
     border: none; /*нет границ*/
     font-family: TimesNewRoman, sans-serif; /*шрифт*/
     font-size: 14px; /*размер шрифта*/
@@ -120,35 +121,87 @@
     background-color: gray;
 }
 
-.animal-select::-webkit-scrollbar { /*Стилизация полосы прокрутки внутри элемента animal-select*/
+.animal-or-structure-select::-webkit-scrollbar { /*Стилизация полосы прокрутки внутри элемента animal-select*/
     width: 12px; /* для Chrome, Safari и Opera */
 }
 
-.animal-select::-webkit-scrollbar-thumb { /*Стилизация ползунка полосы прокрутки элемента animal-select*/
+.animal-or-structure-select::-webkit-scrollbar-thumb { /*Стилизация ползунка полосы прокрутки элемента animal-select*/
     background-color: darkgreen; /* для Chrome, Safari и Opera */
 }
 
-.animal-select:focus { /*действия при нажатии на список*/
+.animal-or-structure-select:focus { /*действия при нажатии на список*/
     outline: 0; /*Убираем контр при фокусе на элементе*/
 }
 
-#search-option {
+#animal-search-option, #structure-search-option {
     display: flex; /*преобразует option в контейнер модели flexbox*/
     flex-direction: column; /*Устанавливает направление главной оси контейнера по вертикали. То есть элементы внутри контейнера будут располагаться вертикально, один под другим*/
     white-space: normal; /* Разрешаем перенос текста на новую строку, если он не помещается*/
     border-bottom: 1px solid black; /* Граница снизу */
 }
 
-#search-option::before { /*добавляет в option содержимое до того, как содержимое додобавится в html*/
+#animal-search-option::before { /*добавляет в option содержимое до того, как содержимое додобавится в html*/
     content: attr(data-animal-base-information); /* Добавляем содержимое второй строки */
     font-size: 13px;
 }
 
-#search-option:nth-child(odd) { /*События для нечетных записей списка*/
+#structure-search-option::before {
+    content: '▶';
+    opacity: 0;
+    font-size: 13px;
+}
+
+#animal-search-option, #structure-search-option:nth-child(odd) { /*События для нечетных записей списка*/
+    background-color: #f0fff0; /*цвет заднего фона*/
+}
+#animal-search-option:nth-child(odd) { /*События для нечетных записей списка*/
     background-color: #f0fff0; /*цвет заднего фона*/
 }
 
-#search-option:nth-child(even) { /*События для нечетных записей списка*/
+#animal-search-option, #structure-search-option:nth-child(even) { /*События для нечетных записей списка*/
     background-color: #c7fcec; /*цвет заднего фона*/
 }
+#animal-search-option:nth-child(even) { /*События для нечетных записей списка*/
+    background-color: #c7fcec; /*цвет заднего фона*/
+}
+
+.modal { /*классы для модального окна*/
+    display: none; /* Скрываем модальное окно по умолчанию */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5); /* Полупрозрачный фон */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+#modal-image {
+    height: 500px;
+    width: 500px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 

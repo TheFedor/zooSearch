@@ -21,51 +21,35 @@
 </head> <!--Тег, закрывающий заголовок-->
 <body> <!--Тек, открывающий тело документа, где располагается основное содержание страницы-->
 
-<!--Добавляем самые простые кнопки для зума-->
-<button style="position: fixed; top: 15%; left: 0; width: 50px; height: 25px" id="zoom-in">+</button>
-<button style="position: fixed; top: 20%; left: 0; width: 50px; height: 25px" id="zoom-out">-</button>
-
 <div id="top-panel"></div>
 
 <div class="external-search-container"> <!--Тег создает контейнер с классом "external-serach-container" из css файла-->
   <div class="inner-container top-inner-container"> <!--Тег создает внутренний контейнер с классами inner-container и top-inner-container из css файла-->
-    <input type="text" id="searchInputField" placeholder="Введите..." oninput="filterList()"> <!--Тег создает текстовое (type="text") поле ввода с id="searchInputField" (считай что программное имя для этого объекта). placeholder - текст, отображающийся в поле до того, как пользователь что-то ввел-->
-    <button id="listSelectionButton" onclick="changingDisplayedList()">К структурам</button> <!--Тег создает кнопку с id="searchSubmitButton" и текстом на кнопке "Ввод"-->
+    <input type="text" id="searchInputField" placeholder="Введите..." oninput="filterAnimals()"> <!--Тег создает текстовое (type="text") поле ввода с id="searchInputField" (считай что программное имя для этого объекта). placeholder - текст, отображающийся в поле до того, как пользователь что-то ввел-->
+    <button id="searchSubmitButton" onclick="findRoad()">Ввод</button> <!--Тег создает кнопку с id="searchSubmitButton" и текстом на кнопке "Ввод"-->
   </div> <!--Закрывающий тег верхнего внутреннего контейнера-->
   <div class="inner-container middle-inner-container">
-    <select id="animal-select" class="animal-or-structure-select" onclick="selectPhotoAndData()" size="10" >
-      <option th:each="animalInfo : ${animalsInfo}" th:value="${animalInfo.getId()}" th:text="${animalInfo.getAnimalsEntity().getAnimalSpecies()}" th:data-animal-base-information="${animalInfo.getAnimalBaseInformation()}" th:animal-class="${animalInfo.getAnimalsEntity().getAnimalClass()}" th:data-photo="${animalInfo.getPhotoLink()}" th:brief-description="${animalInfo.getBriefInfo()}" th:full-description="${animalInfo.getFullInfo()}" id="animal-search-option"></option>
+    <select id="animal-select" class="animal-select" size="10" onchange="handleSelection()" onclick="selectAnimalPhotoAndData()">
+      <option th:each="animal : ${animals}" th:value="${animal.getAnimalSpecies()}" th:text="${animal.getAnimalSpecies()}" th:data-animal-base-information="${animal.getAnimalBaseInformation()}" th:data-photo="${animal.getPhotoLink()}" th:animals-brief-description="${animal.getBriefInfo()}"  id="search-option"></option>
       <!--<option th:each="animal : ${animals}" th:value="${animal.getAnimalBaseInformation()}" th:text="${animal.getAnimalBaseInformation()}"th:data-photo="${animal.getPhotoLink()}"></option>-->
-    </select>
-    <select style="display: none;" id="structure-select" class="animal-or-structure-select" onclick="selectPhotoAndData()" size="10" >
-      <option th:each="structureInfo : ${structuresInfo}" th:value="${structureInfo.getStructureName()}" th:text="${structureInfo.getStructureName()}" th:data-photo="${structureInfo.getPhotoLink()}" th:brief-description="${structureInfo.getBriefInfo()}" th:full-description="${structureInfo.getFullInfo()}" id="structure-search-option"></option> <!--th:data-photo="${animal.getPhotoLink()}" th:animals-brief-description="${animal.getBriefInfo()}" -->
-      <!--<option th:each="animal : ${animals}" th:value="${animal.getAnimalBaseInformation()}" th:text="${animal.getAnimalBaseInformation()}"th:data-photo="${animal.getPhotoLink()}"></option>-->
+      <!--<th:block th:each="animal: ${animals}">
+        <option>
+          <span th:text="${animal.getAnimalBaseInformation()}"></span>
+          <span th:text="${animal.getAnimalSpecies()}"></span>
+        </option>
+      </th:block>-->
     </select>
   </div> <!--Тег создает внутренний контейнер с классами inner-container и middle-inner-container из css файла-->
   <div class="inner-container bottom-inner-container">
-    <div class="left-part-bottom-inner-container" id="photo-block"></div>
+    <div class="left-part-bottom-inner-container" id="animals-image-block"></div>
     <div class="right-part-bottom-inner-container">
-      <p id="brief-information-block">Моско́вский зоопарк — зоологический парк в центре Москвы.<br><b>Один из старейших зоопарков (1864) в Европе</b> и пятый по площади зоопарк России. Входит в десятку самых посещаемых зоопарков мира (до 3,8 млн человек в год).<br>В коллекции зоопарка <b>1267 видов</b> животных, <b>10531 особей</b>.</p>
+      <p id="animals-information-block">Моско́вский зоопарк — зоологический парк в центре Москвы.<br><b>Один из старейших зоопарков (1864) в Европе</b> и пятый по площади зоопарк России. Входит в десятку самых посещаемых зоопарков мира (до 3,8 млн человек в год).<br>В коллекции зоопарка <b>1267 видов</b> животных, <b>10531 особей</b>.<br>Подробнее...</p>
     </div>
   </div> <!--Тег создает внутренний контейнер с классами inner-container и bottom-inner-container из css файла-->
 </div> <!--Закрывающий тег внешнего контейнера с классом "external-search-container"-->
 
-<!--Модальное окно-->
-<div id="modal-window" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img id="modal-image">
-    <p id="modal-text"></p>
-  </div>
-</div>
-
 <div id="map-container"></div>
 
-<!--Скрытый блок для передачи данных в js-->
-<div id="avatars-data" style="display: none;" th:data-animal-avatars="${animalAvatars}" th:data-structure-avatars="${infrastructureAvatars}">
-</div>
-
-<script src="javaScript/search_block_scripts.js"></script> <!--Тег, подключающий внешний JavaScript файл по адресу src (В JS файлах прописана динамика страницы)-->
-<script src="javaScript/map_scripts.js"></script>
+<script src="javaScript/all_scripts_file.js"></script> <!--Тег, подключающий внешний JavaScript файл по адресу src (В JS файлах прописана динамика страницы)-->
 </body><!--Тег, закрывающий секцию тела документа-->
 </html> <!--Тег, закрывающий html-документ-->
