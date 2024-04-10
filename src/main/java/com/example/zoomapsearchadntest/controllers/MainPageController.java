@@ -66,22 +66,57 @@ public class MainPageController {
         model.addAttribute("animalsInfo", animalsInfo); //Сохраняет данные animals в модель под именем "animals". Другими словами, добавляет атрибут с именем "animals" и значением animals в объект Model
 
         //добавляем в модель записи для размещения аватарок и их входов
-        List<AnimalAvatarsEntity> animalAvatarsList = animalAvatarsRepository.findAll();
-        for (var i = 0; i < animalAvatarsList.size(); ++i) {
-            System.out.println("аватарки животного: "+ animalAvatarsList.get(i).getAnimalsEntity().getAnimalSpecies());
-        }
-        List<ServiceInfrastructureAvatarsEntity> serviceInfrastructureAvatarsList = serviceInfrastructureAvatarsRepository.findAll();
-        model.addAttribute("animalAvatars", animalAvatarsList);
-        model.addAttribute("infrastructureAvatars", serviceInfrastructureAvatarsList);
 
-        int[][] intMatr = new int[2][2];
-        intMatr[0][0] = 1;
-        intMatr[0][1] = 2;
-        intMatr[1][0] = 9;
-        intMatr[1][1] = 10;
+        List<AnimalAvatarsEntity> animalAvatarsList = animalAvatarsRepository.findAll();
+        List<ServiceInfrastructureAvatarsEntity> serviceInfrastructureAvatarsList = serviceInfrastructureAvatarsRepository.findAll();
+        List<EntrancesToBuildingsEntity> entrancesToBuildingsList = entrancesToBuildingsRepository.findAll();
+
+        //создаем удобные матрицы для передачи их в JS
+        //      1-я матрица в каждой записи содержит поля {animal_species;animal_avatar_link;building_avatar_link(или нуль);x_coordinate_of_avatar;y_coordinate_of_avatar;building_name}
+        String[][] locationOfAnimals = new String[animalAvatarsList.size()][6];
+        //              заполняем матрицу 1
+        for (int i = 0; i < locationOfAnimals.length; ++i) {
+            locationOfAnimals[i][0] = animalAvatarsList.get(i).getAnimalsEntity().getAnimalSpecies();
+            locationOfAnimals[i][1] = animalAvatarsList.get(i).getAnimalAvatarLink();
+            if (animalAvatarsList.get(i).getXCoordinateAvatar() != null) { //если животное размещается в частном вольере
+                locationOfAnimals[i][2] = "null";
+                locationOfAnimals[i][3] = Integer.toString(animalAvatarsList.get(i).getXCoordinateAvatar());
+                locationOfAnimals[i][4] = Integer.toString(animalAvatarsList.get(i).getYCoordinateAvatar());
+            } else { //если животное размещается в общем вольере
+                locationOfAnimals[i][2] = animalAvatarsList.get(i).getBuildingsOfObjectsEntity().getBuildingAvatarLink();
+                locationOfAnimals[i][3] = Integer.toString(animalAvatarsList.get(i).getBuildingsOfObjectsEntity().getXCoordinateAvatar());
+                locationOfAnimals[i][4] = Integer.toString(animalAvatarsList.get(i).getBuildingsOfObjectsEntity().getYCoordinateAvatar());
+            }
+            locationOfAnimals[i][5] = animalAvatarsList.get(i).getBuildingsOfObjectsEntity().getBuildingName();
+        }
+        //      2-я матрица в каждой записи содержит поля {structure_name;structure_avatar_link;;x_coordinate_of_avatar;y_coordinate_of_avatar;building_name}
+        String[][] locationOfStructures = new String[serviceInfrastructureAvatarsList.size()][5];
+        //              заполняем матрицу 2
+        for (int i = 0; i < locationOfStructures.length; ++i) {
+            locationOfStructures[i][0] = serviceInfrastructureAvatarsList.get(i).getServiceInfrastructureEntity().getStructureName();
+            locationOfStructures[i][1] = serviceInfrastructureAvatarsList.get(i).getStructureAvatarLink();
+            locationOfStructures[i][2] = Integer.toString(serviceInfrastructureAvatarsList.get(i).getXCoordinateAvatar());
+            locationOfStructures[i][3] = Integer.toString(serviceInfrastructureAvatarsList.get(i).getYCoordinateAvatar());
+            locationOfStructures[i][4] = serviceInfrastructureAvatarsList.get(i).getBuildingsOfObjectsEntity().getBuildingName();
+        }
+        //      3-я матрица в каждой записи содержит поля {building_name;x_coordinate_of_entrance;y_coordinate_of_entrance}
+        String[][] entrances = new String[entrancesToBuildingsList.size()][3];
+        //              заполняем матрицу 3
+        for (int i = 0; i < entrances.length; ++i) {
+            entrances[i][0] = entrancesToBuildingsList.get(i).getBuildingsOfObjectsEntity().getBuildingName();
+            entrances[i][1] = Integer.toString(entrancesToBuildingsList.get(i).getXCoordinateOfEntrance());
+            entrances[i][2] = Integer.toString(entrancesToBuildingsList.get(i).getYCoordinateOfEntrance());
+        }
+        //конвертируем матрицы в формат JSON для дальнейшего удобства передачи в JS файл
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonIntMatr = objectMapper.writeValueAsString(intMatr);
-        model.addAttribute("intMatr", jsonIntMatr);
+        String jsonLocationOfAnimals = objectMapper.writeValueAsString(locationOfAnimals);
+        String jsonLocationOfStructures = objectMapper.writeValueAsString(locationOfStructures);
+        String jsonEntrances = objectMapper.writeValueAsString(entrances);
+        //добавляем JSON форматы матриц в модель
+        model.addAttribute("jsonLocationOfAnimals", jsonLocationOfAnimals);
+        model.addAttribute("jsonLocationOfStructures", jsonLocationOfStructures);
+        model.addAttribute("jsonEntrances", jsonEntrances);
+
 
         return "main_page"; //Возвращает имя представления, которое должно быть отображено. Тут "animalsPage" указывает на имя файла представления (http-файла), который должен быть отображен пользователю в результате работы этого метода, в ответ на запрос
     }

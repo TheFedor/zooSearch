@@ -61,10 +61,9 @@
 
 <div id="map-container"></div>
 
-<!--Скрытый блок для передачи данных в js-->
-<!--<div id="avatars-data" style="display: none;" th:data-animal-avatars="${animalAvatars}" th:data-structure-avatars="${infrastructureAvatars}"></div>-->
+<!--Скрытый блок для передачи матриц расположения и входов животных и структур в js файл-->
+<div id="hidden-block-for-data-transmission" style="display: none;" th:attr="location-of-animals=${jsonLocationOfAnimals}, location-of-structures=${jsonLocationOfStructures}, data-entrances=${jsonEntrances}"></div>
 
-<div id="matr" style="display: none;" th:attr="matr1=${intMatr}"></div>
 
 <script src="javaScript/search_block_scripts.js"></script> <!--Тег, подключающий внешний JavaScript файл по адресу src (В JS файлах прописана динамика страницы)-->
 <script src="javaScript/map_scripts.js"></script>
