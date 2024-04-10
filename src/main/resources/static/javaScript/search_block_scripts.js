@@ -67,10 +67,12 @@ function filterList() { //функция для поиска животных п
 function selectPhotoAndData() { //функция для отображения картинки и информации о животном
     var listSelectionButton = document.getElementById('listSelectionButton');
     var selectBlock;
+    var bool = true;
     if (listSelectionButton.textContent === 'К структурам') {
         selectBlock = document.getElementById('animal-select');
     } else {
         selectBlock = document.getElementById('structure-select');
+        bool = false;
     }
     var selectedOption = selectBlock.options[selectBlock.selectedIndex];
     var photoLink = selectedOption.getAttribute('data-photo');
@@ -79,6 +81,9 @@ function selectPhotoAndData() { //функция для отображения �
     var fullInfo = selectedOption.getAttribute('full-description');
     displayInfo(briefInfo, fullInfo, photoLink);
 
+    //временно тут же разместим добавление в маршрутный лист
+    var name = selectedOption.getAttribute('name');
+    addToRouteList(name, bool);
 }
 
 function displayPhoto(photoLink) { //функция для отображения соответствующей фотографии животного

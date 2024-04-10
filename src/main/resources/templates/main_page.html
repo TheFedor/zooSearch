@@ -34,11 +34,11 @@
   </div> <!--Закрывающий тег верхнего внутреннего контейнера-->
   <div class="inner-container middle-inner-container">
     <select id="animal-select" class="animal-or-structure-select" onclick="selectPhotoAndData()" size="10" >
-      <option th:each="animalInfo : ${animalsInfo}" th:value="${animalInfo.getId()}" th:text="${animalInfo.getAnimalsEntity().getAnimalSpecies()}" th:data-animal-base-information="${animalInfo.getAnimalBaseInformation()}" th:animal-class="${animalInfo.getAnimalsEntity().getAnimalClass()}" th:data-photo="${animalInfo.getPhotoLink()}" th:brief-description="${animalInfo.getBriefInfo()}" th:full-description="${animalInfo.getFullInfo()}" id="animal-search-option"></option>
+      <option th:each="animalInfo : ${animalsInfo}" th:value="${animalInfo.getId()}" th:text="${animalInfo.getAnimalsEntity().getAnimalSpecies()}" th:data-animal-base-information="${animalInfo.getAnimalBaseInformation()}" th:animal-class="${animalInfo.getAnimalsEntity().getAnimalClass()}" th:data-photo="${animalInfo.getPhotoLink()}" th:brief-description="${animalInfo.getBriefInfo()}" th:full-description="${animalInfo.getFullInfo()}" th:name="${animalInfo.getAnimalsEntity().getAnimalSpecies()}" id="animal-search-option"></option>
       <!--<option th:each="animal : ${animals}" th:value="${animal.getAnimalBaseInformation()}" th:text="${animal.getAnimalBaseInformation()}"th:data-photo="${animal.getPhotoLink()}"></option>-->
     </select>
     <select style="display: none;" id="structure-select" class="animal-or-structure-select" onclick="selectPhotoAndData()" size="10" >
-      <option th:each="structureInfo : ${structuresInfo}" th:value="${structureInfo.getStructureName()}" th:text="${structureInfo.getStructureName()}" th:data-photo="${structureInfo.getPhotoLink()}" th:brief-description="${structureInfo.getBriefInfo()}" th:full-description="${structureInfo.getFullInfo()}" id="structure-search-option"></option> <!--th:data-photo="${animal.getPhotoLink()}" th:animals-brief-description="${animal.getBriefInfo()}" -->
+      <option th:each="structureInfo : ${structuresInfo}" th:value="${structureInfo.getStructureName()}" th:text="${structureInfo.getStructureName()}" th:data-photo="${structureInfo.getPhotoLink()}" th:brief-description="${structureInfo.getBriefInfo()}" th:full-description="${structureInfo.getFullInfo()}" th:name="${structureInfo.getStructureName()}" id="structure-search-option"></option> <!--th:data-photo="${animal.getPhotoLink()}" th:animals-brief-description="${animal.getBriefInfo()}" -->
       <!--<option th:each="animal : ${animals}" th:value="${animal.getAnimalBaseInformation()}" th:text="${animal.getAnimalBaseInformation()}"th:data-photo="${animal.getPhotoLink()}"></option>-->
     </select>
   </div> <!--Тег создает внутренний контейнер с классами inner-container и middle-inner-container из css файла-->
@@ -67,5 +67,7 @@
 
 <script src="javaScript/search_block_scripts.js"></script> <!--Тег, подключающий внешний JavaScript файл по адресу src (В JS файлах прописана динамика страницы)-->
 <script src="javaScript/map_scripts.js"></script>
+<script src="javaScript/top_panel_scripts.js"></script>
+
 </body><!--Тег, закрывающий секцию тела документа-->
 </html> <!--Тег, закрывающий html-документ-->

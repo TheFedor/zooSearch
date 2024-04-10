@@ -5,5 +5,11 @@
     height: 10%;
     background-color: #f0fff0;
     border-bottom: 10px solid #65E17B;
-    z-index: 9999; /*позиционируем этот блок поверх всех возможных остальных*/
+    z-index: 9998; /*позиционируем этот блок поверх всех возможных остальных*/
+    display: flex;       /* Располагаем элементы в строку */
+    flex-wrap: nowrap;   /* Останавливаем перенос элементов на следующую строку */
+}
+
+#top-panel img {
+    display: inline-block;
 }
