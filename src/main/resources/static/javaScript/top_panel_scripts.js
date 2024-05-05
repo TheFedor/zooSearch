@@ -56,8 +56,11 @@ function addToRouteList(name, bool) { //Функция для добавлени
         counter += 1;
         //добавляем картинку в маршрутный лист
         addImageToTopPanel(imgSrc, name);
-        //строим маршрут
         console.log('добавили: ' + routeList[routeList.length-2] + '  а также: '  + routeList[routeList.length-1]);
+        //строим новый путь на карте
+        console.log('Внешнее начало поиска пути. routeList:' + routeList);
+        drawShortestRoadOnMap();
+        console.log('Внешнее окончание поиска пути');
     } else {
         routeList.push([counter + '▶arrow', false]);
         routeList.push(routeInnerArray);
@@ -66,8 +69,11 @@ function addToRouteList(name, bool) { //Функция для добавлени
         counter += 1;
         //добавляем картинку в маршрутный лист
         addImageToTopPanel(imgSrc, name);
-        //строим маршрут
         console.log('добавили: ' + routeList[routeList.length-2] + '  а также: '  + routeList[routeList.length-1]);
+        //строим новый путь на карте
+        console.log('Внешнее начало поиска пути');
+        drawShortestRoadOnMap();
+        console.log('Внешнее окончание поиска пути');
     }
     console.log('текущий routeList:');
     for (var i = 0; i < routeList.length; ++i) {
@@ -77,6 +83,7 @@ function addToRouteList(name, bool) { //Функция для добавлени
     console.log(' ');
 }
 
+//Функция для добавления главных и обычных стрелок-переходов на top panel
 function addArrowTranslationBetweenImagesOfRouteList(nameId, mainArrow) {
     var img = document.createElement('img');
     var specialId = nameId + '▶arrow';
@@ -128,7 +135,9 @@ function makeArrowToMain(nameId) { // функция для перевода с�
     }
     console.log(' ');
 
-    //строим маршрут
+    console.log('Внешнее начало поиска пути');
+    drawShortestRoadOnMap();
+    console.log('Внешнее окончание поиска пути');
 }
 
 function addImageToTopPanel(imgSrc, name) { //функция для добавления картинка в top-panel
@@ -269,6 +278,154 @@ function dropImageFromTopPanel(specialId) { //функция для удален
             routeList.splice(index, 2);
         } else { console.log('Изображение ' + imageToDelete + ' / ' + arrowToDelete + 'не найдено');}
     }
+    console.log('Внешнее начало поиска пути');
+    drawShortestRoadOnMap();
+    console.log('Внешнее окончание поиска пути');
+}
 
-    //строим маршрут
+//Функция для рисования кратчайшего пути на карте
+function drawShortestRoadOnMap() {
+    // Очищаем весь canvas, чтобы заполнить его по новой
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //Проходим по всем точкам
+    for (var i = 0; i < routeList.length; i+=2) {
+        if (i + 2 < routeList.length) {
+            var fromX = parseInt(routeList[i][1]);
+            var fromY = parseInt(routeList[i][2]);
+            var toX = parseInt(routeList[i+2][1]);
+            var toY = parseInt(routeList[i+2][2]);
+            console.log('Начинаем поиск пути');
+            var matrixOfShortestRoad = findShortestRoad(fromX, fromY, toX, toY);
+            console.log('Путь найден');
+            //Рисуем полученный путь на карте
+            var sch = 0;
+            for (var i1 = 0; i1 < 1500; ++i1) {
+                for (var j1 = 0; j1 < 2500; ++j1) {
+                    if (matrixOfShortestRoad[i1][j1] === 1) {
+                        sch += 1;
+                        ctx.fillStyle = 'red';
+                        ctx.fillRect(j1, i1, 3, 3);
+                    }
+                }
+            }
+            console.log('Длина кратчайшего пути по матриуе одной дороги: ' + (sch - 1));
+            //Рисуем полученный путь на карте
+
+        }
+    }
+}
+
+function findShortestRoad(fromX, fromY, toX, toY) {
+    //Создаем матрицу размера матрицы дорог для отметки на ней всех путей для начала, все отмечено как -1
+    var matrixOfAllRoads = Array.from({ length: 1500 }, function() {
+        return Array.from({ length: 2500 }, function() { return -1; });
+    });
+    matrixOfAllRoads[fromY][fromX] = 0;
+    //создаем очередь проверяемых точек для прохода вширь
+    var query = new Array();
+    //заполняем первые координаты в очередь
+    query.push([fromX, fromY]);
+    //начинаем проход вширь
+    while (query.length > 0) {
+        var nowPointX = parseInt(query[0][0]);
+        var nowPointY = parseInt(query[0][1]);
+        var roadToThatPointLength = matrixOfAllRoads[nowPointY][nowPointX];
+        query.shift();
+
+        //проверяем:
+        //вверх (если там есть дорога и не край карты)
+        if (nowPointY - 1 >= 0 && mapRoadMatrix[nowPointY-1][nowPointX] === 1) {
+            //если ранее там не проходили или путь до сюда занимал больше времени
+            if (matrixOfAllRoads[nowPointY-1][nowPointX] === -1 || matrixOfAllRoads[nowPointY-1][nowPointX] > roadToThatPointLength + 1) {
+                //идем туда и добавляем новую точку в очередь
+                matrixOfAllRoads[nowPointY-1][nowPointX] = roadToThatPointLength + 1;
+                query.push([nowPointX, nowPointY-1]);
+            }
+        }
+        //вниз (если там есть дорога и не край карты)
+        if (nowPointY + 1 < 1500 && mapRoadMatrix[nowPointY+1][nowPointX] === 1) {
+            //если ранее там не проходили или путь до сюда занимал больше времени
+            if (matrixOfAllRoads[nowPointY+1][nowPointX] === -1 || matrixOfAllRoads[nowPointY+1][nowPointX] > roadToThatPointLength + 1) {
+                //идем туда и добавляем новую точку в очередь
+                matrixOfAllRoads[nowPointY+1][nowPointX] = roadToThatPointLength + 1;
+                query.push([nowPointX, nowPointY+1]);
+            }
+        }
+        //влево (если там есть дорога и не край карты)
+        if (nowPointX - 1 >= 0 && mapRoadMatrix[nowPointY][nowPointX-1] === 1) {
+            //если ранее там не проходили или путь до сюда занимал больше времени
+            if (matrixOfAllRoads[nowPointY][nowPointX-1] === -1 || matrixOfAllRoads[nowPointY][nowPointX-1] > roadToThatPointLength + 1) {
+                //идем туда и добавляем новую точку в очередь
+                matrixOfAllRoads[nowPointY][nowPointX-1] = roadToThatPointLength + 1;
+                query.push([nowPointX-1, nowPointY]);
+            }
+        }
+        //вправо (если там есть дорога и не край карты)
+        if (nowPointX + 1 < 2500 && mapRoadMatrix[nowPointY][nowPointX+1] === 1) {
+            //если ранее там не проходили или путь до сюда занимал больше времени
+            if (matrixOfAllRoads[nowPointY][nowPointX+1] === -1 || matrixOfAllRoads[nowPointY][nowPointX+1] > roadToThatPointLength + 1) {
+                //идем туда и добавляем новую точку в очередь
+                matrixOfAllRoads[nowPointY][nowPointX+1] = roadToThatPointLength + 1;
+                query.push([nowPointX+1, nowPointY]);
+            }
+        }
+
+    }
+    console.log("Длина кратчайшего пути по матрице всех дорог: " + matrixOfAllRoads[toY][toX]);
+    console.log('Начинаем поиск единственной дороги');
+    //Создаем матрицу размера матрицы дорог для отметки на ней кратчайшего пути, все отмечено как -1
+    var matrixOfShortestRoad = Array.from({ length: 1500 }, function() {
+        return Array.from({ length: 2500 }, function() { return -1; });
+    });
+    //ищем кратчайший путь при помощи обратного прохода по матрице всех путей
+    var nowPointX = parseInt(toX);
+    var nowPointY = parseInt(toY);
+    var nowShortestRoadLength = parseInt(matrixOfAllRoads[nowPointY][nowPointX]);
+    matrixOfShortestRoad[nowPointY][nowPointX] = 1;
+    while (nowPointX !== fromX || nowPointY !== fromY) {
+        //console.log();
+        //console.log('Длина пути при проверке: ' + nowShortestRoadLength);
+        //console.log('Текущая координата: [' + nowPointX + ';' + nowPointY + ']');
+        //console.log('Куда направляемся: [' + fromX + ';' + fromY + ';');
+        var nextPointX, nextPointY;
+        //Проверяем:
+        //вверх
+        if (nowPointY-1 >= 0) {
+            if (matrixOfAllRoads[nowPointY-1][nowPointX] === nowShortestRoadLength - 1) {
+                nextPointX = parseInt(nowPointX);
+                nextPointY = parseInt(parseInt(nowPointY)-1);
+            }
+        }
+        //вниз
+        if (nowPointY+1 < 1500) {
+            if (matrixOfAllRoads[nowPointY+1][nowPointX] === nowShortestRoadLength - 1) {
+                nextPointX = parseInt(nowPointX);
+                nextPointY = parseInt(parseInt(nowPointY)+1);
+            }
+        }
+        //влево
+        if (nowPointX-1 >= 0) {
+            if (matrixOfAllRoads[nowPointY][nowPointX-1] === nowShortestRoadLength - 1) {
+                nextPointX = parseInt(parseInt(nowPointX)-1);
+                nextPointY = parseInt(nowPointY);
+            }
+        }
+        //вправо
+        if (nowPointX+1 <2500) {
+            if (matrixOfAllRoads[nowPointY][nowPointX+1] === nowShortestRoadLength - 1) {
+                nextPointX = parseInt(parseInt(nowPointX)+1);
+                nextPointY = parseInt(nowPointY);
+            }
+        }
+        //отмечаем прошлую точку пути на матрице кратчайшего пути
+        matrixOfShortestRoad[nextPointY][nextPointX] = 1;
+        //переводим переменные к следующему циклу
+        nowPointX = parseInt(nextPointX);
+        nowPointY = parseInt(nextPointY);
+        nowShortestRoadLength = parseInt(nowShortestRoadLength) - 1;
+    }
+    //console.log('В результате текущая координата: [' + nowPointX + ';' + nowPointY + ']');
+    //возвращаем полученную матрицу с кратчайшим путем
+    return matrixOfShortestRoad;
+    console.log('Единственная дорога найдена');
 }
