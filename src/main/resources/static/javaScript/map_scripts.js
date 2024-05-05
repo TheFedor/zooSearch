@@ -32,7 +32,7 @@ function fillingMapColorVector() {
     //устанавливаем сурс нового изображения
     image.src = backgroundImageUrl;
 
-    console.log('ждем загрузки изображения');
+    //console.log('ждем загрузки изображения');
     image.onload = function () {
 
         image.style.width = getComputedStyle(mapContainer).getPropertyValue('width');
@@ -40,7 +40,7 @@ function fillingMapColorVector() {
 
         //небольшая пауза в 15 секунд
         setTimeout(function () {
-            console.log('Пауза в 15 секунд прошла');
+            //console.log('Пауза в 15 секунд прошла');
 
 
             //создаем канвас для работы с изображением
@@ -59,9 +59,9 @@ function fillingMapColorVector() {
 
             //проходим по каждому пикселю, сохраняя в формате RGBA
             for (var i = 0; i < localData.length; i+=4) {
-                if (i % 4000000 === 0) {
-                    console.log("текущая итерация: " + (i/4));
-                }
+                //if (i % 4000000 === 0) {
+                    //console.log("текущая итерация: " + (i/4));
+                //}
                 // Получаем цвет пикселя (RGBA)
                 var red = localData[i];
                 var green = localData[i + 1];
@@ -72,8 +72,8 @@ function fillingMapColorVector() {
                 mapColorVector.push([red, green, blue, alpha]);
             }
 
-            console.log('Матрица цветов получена');
-            console.log('Размер матрицы цветов: ' + mapColorVector.length);
+            //console.log('Матрица цветов получена');
+            //console.log('Размер матрицы цветов: ' + mapColorVector.length);
 
             fillingMapRoadMatrix();
 
@@ -91,7 +91,7 @@ fillingMapColorVector();
 
 //функция для построения матрицы дорог
 function fillingMapRoadMatrix() {
-    console.log('Получаем матрицу дорог')
+    //console.log('Получаем матрицу дорог')
     //сразу заполняем матрицы дорог (1 - есть дорога, 2 - дороги нет)
     //для этого будем циклами проходить по матрице дорог и счетной переменной - по вектору цветов, для дорог подходит диапазон цветов
     var indexMapColorVector = 0;
@@ -110,7 +110,7 @@ function fillingMapRoadMatrix() {
             indexMapColorVector++;
         }
     }
-    console.log("Матрица дорог составлена")
+    //console.log("Матрица дорог составлена")
 }
 
 //временная функция для визуализации определенных дорог на карте в веб-сайте
@@ -150,7 +150,7 @@ document.getElementById('zoom-out').addEventListener('click', function () {
 })
 
 function gettingLocationsAndCoordinatesOfEntrances() { //функция для заполнения списков расположения объектов и входов
-    console.log('получение информации о расположении животных/структур и входов');
+    //console.log('получение информации о расположении животных/структур и входов');
     var blockForDataTransmission = document.getElementById('hidden-block-for-data-transmission');
     var localLocationOfAnimals = blockForDataTransmission.getAttribute('location-of-animals');
     var localLocationOfStructures = blockForDataTransmission.getAttribute('location-of-structures');
@@ -159,7 +159,7 @@ function gettingLocationsAndCoordinatesOfEntrances() { //функция для �
     localLocationOfStructures = JSON.parse(localLocationOfStructures);
     localEntrances = JSON.parse(localEntrances);
 
-    console.log('данные расположений получены');
+    //console.log('данные расположений получены');
     locationOfAnimals = localLocationOfAnimals;
     locationOfStructures = localLocationOfStructures;
     entrances = localEntrances;
@@ -173,9 +173,9 @@ function displayAllAvatars() { //функция для отображения а
     //проходим по массиву с аватарками животных
     var uniqueElements = {};
     for (var i = 0; i < locationOfAnimals.length; ++i) {
-        console.log('размещаем аватар: ' + locationOfAnimals[i][0]);
+        //console.log('размещаем аватар: ' + locationOfAnimals[i][0]);
         if (locationOfAnimals[i][2].toLowerCase() === 'null') { //размещаем аватарку животного
-            console.log('    отдельная зона');
+            //console.log('    отдельная зона');
             var img = document.createElement('img'); //создаем новый элемент - изображение
             img.src = locationOfAnimals[i][1]; //устанавливаем путь к изображению
             img.style.position = 'absolute'; //устанавливаем абсолютное позиционирование
@@ -192,7 +192,7 @@ function displayAllAvatars() { //функция для отображения а
             //добавляем изображение в родительский элемент
             mapContainer.appendChild(img);
         } else { //размещаем аватарку постройки, если еще не была размещена
-            console.log('    общее здание')
+            //console.log('    общее здание')
             if (!uniqueElements[locationOfAnimals[i][2]]) { //только если ранее не размещали эту аватарку
                 uniqueElements[locationOfAnimals[i][2]] = true;
                 var img = document.createElement('img'); //создаем новый элемент - изображение
@@ -216,7 +216,7 @@ function displayAllAvatars() { //функция для отображения а
 
     //проходим по массиву с аватарками структур
     for (var i = 0; i < locationOfStructures.length; ++i) {
-        console.log('размещаем структуры');
+        //console.log('размещаем структуры');
         var img = document.createElement('img');
         img.src = locationOfStructures[i][1];
         img.style.position = 'absolute';

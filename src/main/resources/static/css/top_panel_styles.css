@@ -14,3 +14,26 @@
 #top-panel img {
     display: inline-block;
 }
+
+/*Стили для крестика - удаления картинки из маршрутного листа*/
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* Прозрачный фон */
+    padding: 5px;
+    border-radius: 50%;
+    z-index: 1; /* Чтобы крестик был поверх изображения */
+}
+
+.close-button:hover {
+    background-color: rgba(0, 0, 0, 0.7); /* Изменяем цвет фона при наведении */
+}
+
+/*Контейнер, объединяющий изображение маршрутного листа и крестик*/
+.container-image-plus-cross-on-top-panel {
+    position: relative; /* Добавляем position: relative; */
+    display: inline-block;
+}
