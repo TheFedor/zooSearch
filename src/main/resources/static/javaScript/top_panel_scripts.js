@@ -151,7 +151,10 @@ function addImageToTopPanel(imgSrc, name) { //функция для добавл
     img.id = specialId;
     img.onclick = function() {
         //dropImageFromTopPanel(specialId);
-        console.log('Тык по изображению ' + name);
+        //console.log('Тык по изображению ' + name);
+        var realName = name.trim().split('▶');
+        document.getElementById('searchInputField').value = realName[0];
+        filterList();
     }
 
     var closeButton = document.createElement('div');
@@ -159,10 +162,11 @@ function addImageToTopPanel(imgSrc, name) { //функция для добавл
     closeButton.textContent = '✕';
     closeButton.onclick = function() {
         console.log('Тык по крестику ' + name);
+        dropImageFromTopPanel(specialId);
     }
 
     var container = document.createElement('div');
-    container.classList.add('.container-image-plus-cross-on-top-panel');
+    container.classList.add('container-image-plus-cross-on-top-panel');
     container.appendChild(img);
     container.appendChild(closeButton);
     topPanel.appendChild(container);
