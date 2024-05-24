@@ -1,0 +1,66 @@
+CREATE TABLE animals (
+	animal_class VARCHAR(150) NOT NULL,
+	animal_order VARCHAR(150) NOT NULL,
+	animal_family VARCHAR(150) NOT NULL,
+	animal_genus VARCHAR(150) NOT NULL,
+	animal_species VARCHAR(150) NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE animals_info (
+	id SERIAL PRIMARY KEY,
+	brief_info VARCHAR(500),
+	full_info TEXT,
+	photo_link VARCHAR(500),
+	animal_species VARCHAR(150) NOT NULL,
+	FOREIGN KEY (animal_species) REFERENCES animals(animal_species)
+);
+
+CREATE TABLE service_infrastructure (
+	structure_name VARCHAR(1000) NOT NULL PRIMARY KEY,
+	brief_info VARCHAR(500),
+	full_info TEXT,
+	photo_link VARCHAR(500)
+);
+
+CREATE TABLE buildings_of_objects (
+	building_avatar_link VARCHAR(500),
+	x_coordinate_avatar INTEGER,
+	y_coordinate_avatar INTEGER,
+	building_name VARCHAR(1000) NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE animal_avatars (
+	id SERIAL PRIMARY KEY,
+	animal_avatar_link VARCHAR(500) NOT NULL,
+	x_coordinate_avatar INTEGER,
+	y_coordinate_avatar INTEGER,
+	building_name VARCHAR(1000) NOT NULL,
+	animal_species VARCHAR(150) NOT NULL,
+	FOREIGN KEY (building_name) REFERENCES buildings_of_objects(building_name),
+	FOREIGN KEY (animal_species) REFERENCES animals(animal_species)
+);
+
+CREATE TABLE service_infrastructure_avatars (
+	id SERIAL PRIMARY KEY,
+	structure_avatar_link VARCHAR(500) NOT NULL,
+	x_coordinate_avatar INTEGER NOT NULL,
+	y_coordinate_avatar INTEGER NOT NULL,
+	building_name VARCHAR(1000) NOT NULL,
+	structure_name VARCHAR(1000) NOT NULL,
+	FOREIGN KEY (building_name) REFERENCES buildings_of_objects(building_name),
+	FOREIGN KEY (structure_name) REFERENCES service_infrastructure(structure_name)
+);
+
+CREATE TABLE entrances_to_buildings (
+	id SERIAL PRIMARY KEY,
+	x_coordinate_of_entrance INTEGER NOT NULL,
+	y_coordinate_of_entrance INTEGER NOT NULL,
+	building_name VARCHAR(1000) NOT NULL,
+	FOREIGN KEY (building_name) REFERENCES buildings_of_objects(building_name)
+);
+
+CREATE TABLE employee_data (
+	login VARCHAR(100) NOT NULL,
+	password VARCHAR(100) NOT NULL,
+	PRIMARY KEY (login, password)
+);
